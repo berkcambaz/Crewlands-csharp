@@ -14,5 +14,7 @@ public class Game : MonoBehaviour
 
         // Initialize managers
         worldManager.Init();
+
+        World.Generate(10, 10, 3);
     }
 }

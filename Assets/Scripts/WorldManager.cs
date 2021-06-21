@@ -7,10 +7,10 @@ public class WorldManager : MonoBehaviour
 {
     public static WorldManager Instance;
 
-    public Tile[] tilesProvinceOwned;
-    public Tile[] tilesProvinceOccupied;
-    public Tile[] tilesLandmark;
-    public Tile[] tilesArmy;
+    public TileBase[] tilesProvinceOwned;
+    public TileBase[] tilesProvinceOccupied;
+    public TileBase[] tilesLandmark;
+    public TileBase[] tilesArmy;
 
     public Tilemap tilemapProvince;
     public Tilemap tilemapLandmark;
@@ -18,30 +18,44 @@ public class WorldManager : MonoBehaviour
 
     public void Init() { Instance = this; }
 
-    public Tile GetProvinceTile(CountryId _countryId, bool _occupied)
+    public void SetWorld()
     {
-        if (_countryId == CountryId.None)
+        for (int y = 0; y < World.height; y++)
+        {
+            for (int x = 0; x < World.width; x++)
+            {
+                Province province = World.provinces[x + y * World.width];
+                tilemapProvince.SetTile(new Vector3Int(x, y, 0), GetProvinceTile(province));
+                tilemapLandmark.SetTile(new Vector3Int(x, y, 0), GetLandmarkTile(province));
+                tilemapArmy.SetTile(new Vector3Int(x, y, 0), GetArmyTile(province));
+            }
+        }
+    }
+
+    public TileBase GetProvinceTile(Province _province)
+    {
+        if (_province.ownedBy == CountryId.None && _province.occupiedBy == CountryId.None)
             return null;
 
-        if (_occupied)
-            return tilesProvinceOccupied[(int)_countryId];
+        if (_province.occupiedBy != CountryId.None)
+            return tilesProvinceOccupied[(int)_province.occupiedBy];
         else
-            return tilesProvinceOwned[(int)_countryId];
+            return tilesProvinceOwned[(int)_province.ownedBy];
     }
 
-    public Tile GetLandmarkTile(LandmarkId _landmarkId)
+    public TileBase GetLandmarkTile(Province _province)
     {
-        if (_landmarkId == LandmarkId.None)
+        if (_province.landmark.id == LandmarkId.None)
             return null;
 
-        return tilesLandmark[(int)_landmarkId];
+        return tilesLandmark[(int)_province.landmark.id];
     }
 
-    public Tile GetArmyTile(Army _army)
+    public TileBase GetArmyTile(Province _province)
     {
-        if (_army.id == CountryId.None)
+        if (_province.army.id == CountryId.None)
             return null;
 
-        return tilesArmy[(int)_army.id];
+        return tilesArmy[(int)_province.army.id];
     }
 }
