@@ -49,22 +49,22 @@ public class World
                 int downIndex = (provinceX) + (provinceY + 1) * width;
                 int leftIndex = (provinceX - 1) + (provinceY) * width;
 
-                if (provinceY - 1 > -1 && provinces[upIndex].ownedBy == CountryId.None)
+                if (provinceY - 1 > -1 && provinces[upIndex] == null)
                 {
                     origins[countryId].Add(new Vector2Int(provinceX, provinceY - 1));
                     provinces[upIndex] = new Province((CountryId)countryId);
                 }
-                else if (provinceX + 1 < width && provinces[upIndex].ownedBy == CountryId.None)
+                else if (provinceX + 1 < width && provinces[rightIndex] == null)
                 {
                     origins[countryId].Add(new Vector2Int(provinceX + 1, provinceY));
                     provinces[rightIndex] = new Province((CountryId)countryId);
                 }
-                else if (provinceY + 1 < height && provinces[upIndex].ownedBy == CountryId.None)
+                else if (provinceY + 1 < height && provinces[downIndex] == null)
                 {
                     origins[countryId].Add(new Vector2Int(provinceX, provinceY + 1));
                     provinces[downIndex] = new Province((CountryId)countryId);
                 }
-                else if (provinceX - 1 > -1 && provinces[upIndex].ownedBy == CountryId.None)
+                else if (provinceX - 1 > -1 && provinces[leftIndex] == null)
                 {
                     origins[countryId].Add(new Vector2Int(provinceX - 1, provinceY));
                     provinces[leftIndex] = new Province((CountryId)countryId);
