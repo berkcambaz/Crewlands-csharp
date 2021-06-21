@@ -6,6 +6,11 @@ public class Army
 {
     public CountryId id;
 
+    public Army(CountryId _id)
+    {
+        id = _id;
+    }
+
     public void Move()
     {
 

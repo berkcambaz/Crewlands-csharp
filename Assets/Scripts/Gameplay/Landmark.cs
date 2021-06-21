@@ -6,6 +6,11 @@ public class Landmark
 {
     public LandmarkId id;
 
+    public Landmark(LandmarkId _id)
+    {
+        id = _id;
+    }
+
     public void Build()
     {
 

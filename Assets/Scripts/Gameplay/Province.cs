@@ -13,8 +13,8 @@ public class Province
     {
         ownedBy = _ownedBy;
         occupiedBy = CountryId.None;
-        landmark = new Landmark();
-        army = new Army();
+        landmark = new Landmark(LandmarkId.None);
+        army = new Army(CountryId.None);
     }
 
     public Province(CountryId _ownedBy, CountryId _occupiedBy, Landmark _landmark, Army _army)
