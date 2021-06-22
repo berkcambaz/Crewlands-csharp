@@ -23,6 +23,11 @@ public class World
         ChooseProvinces();
         SprinkleNature();
 
+        // Set the camera to the center of the world
+        float xOffset = _width / 2f;
+        float yOffset = _height / 2f;
+        Game.Instance.cam.transform.position = new Vector3(xOffset, yOffset, Game.Instance.cam.transform.position.z);
+
         WorldManager.Instance.SetWorld();
     }
 

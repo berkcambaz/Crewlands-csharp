@@ -34,7 +34,7 @@ public class MouseController : MonoBehaviour
             dragOrigin = Input.mousePosition;
         }
 
-        Vector2Int targetTile = Vector2Int.RoundToInt(Game.Instance.cam.ScreenToWorldPoint(Input.mousePosition));
+        Vector2Int targetTile = Vector2Int.FloorToInt(Game.Instance.cam.ScreenToWorldPoint(Input.mousePosition));
         TileUI.Instance.EnableTileHightlight(targetTile);
 
         scroll = Mathf.Clamp(scroll - (Input.mouseScrollDelta.y * Time.deltaTime * 25f), zoomMin, zoomMax);
