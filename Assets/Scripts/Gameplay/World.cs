@@ -26,10 +26,30 @@ public class World
     private static void ChooseProvinces()
     {
         List<Vector2Int>[] origins = new List<Vector2Int>[countryCount];
-        for (int i = 0; i < countryCount; i++)
+        for (int countryId = 0; countryId < countryCount; countryId++)
         {
-            origins[i] = new List<Vector2Int>();
-            origins[i].Add(new Vector2Int(Random.Range(0, width), Random.Range(0, height)));
+            Vector2Int origin = new Vector2Int(Random.Range(0, width), Random.Range(0, height));
+
+            bool sameOriginExists = true;
+            while (sameOriginExists)
+            {
+                if (countryId < 1) break;
+                sameOriginExists = false;
+
+                for (int j = 0; j < countryId; j++)
+                {
+                    if (origin == origins[j][0])
+                    {
+                        origin = new Vector2Int(Random.Range(0, width), Random.Range(0, height));
+                        sameOriginExists = true;
+                        break;
+                    }
+                }
+            }
+
+            origins[countryId] = new List<Vector2Int>();
+            origins[countryId].Add(origin);
+            provinces[origin.x + origin.y * width] = new Province((CountryId)countryId);
         }
 
         bool unoccupiedProvincesLeft = true;
