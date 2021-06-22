@@ -21,6 +21,7 @@ public class World
         srandom = _seed == "" ? new SeedRandom() : new SeedRandom(_seed.GetHashCode());
 
         ChooseProvinces();
+        SprinkleNature();
 
         WorldManager.Instance.SetWorld();
     }
@@ -30,7 +31,7 @@ public class World
         List<Vector2Int>[] origins = new List<Vector2Int>[countryCount];
         for (int countryId = 0; countryId < countryCount; countryId++)
         {
-            Vector2Int origin = new Vector2Int(srandom.Range(0, width), srandom.Range(0, height));
+            Vector2Int origin = new Vector2Int(srandom.Number(0, width), srandom.Number(0, height));
 
             bool sameOriginExists = true;
             while (sameOriginExists)
@@ -42,7 +43,7 @@ public class World
                 {
                     if (origin == origins[j][0])
                     {
-                        origin = new Vector2Int(srandom.Range(0, width), srandom.Range(0, height));
+                        origin = new Vector2Int(srandom.Number(0, width), srandom.Number(0, height));
                         sameOriginExists = true;
                         break;
                     }
@@ -103,6 +104,16 @@ public class World
 
     private static void SprinkleNature()
     {
+        for (int i = 0; i < provinces.Length; i++)
+        {
+            int[,] cases = new int[,] {
+                { 15, (int)LandmarkId.Forest },
+                { 15, (int)LandmarkId.Mountains },
+                { 70, (int)LandmarkId.None }
+            };
 
+            LandmarkId landmarkId = (LandmarkId)srandom.Percent(cases);
+            provinces[i].landmark.id = landmarkId;
+        }
     }
 }
