@@ -20,12 +20,15 @@ public class Game : MonoBehaviour
         worldManager.Init();
         uiManager.Init();
 
-        World.Generate(10, 10, 4);
+        World.Generate(10, 10, 4, "");
     }
 
     private void FixedUpdate()
     {
         if (Input.GetKeyDown(KeyCode.R))
-            World.Generate(10, 10, 4);
+        {
+            World.Generate(10, 10, 4, "");
+            Debug.Log("New generated");
+        }
     }
 }

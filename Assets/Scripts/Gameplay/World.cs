@@ -9,14 +9,16 @@ public class World
     public static int width;
     public static int height;
     public static int countryCount;
+    private static SeedRandom srandom;
 
-    public static void Generate(int _width, int _height, int _countryCount)
+    public static void Generate(int _width, int _height, int _countryCount, string _seed)
     {
         countries = new Country[_countryCount];
         provinces = new Province[_width * _height];
         width = _width;
         height = _height;
         countryCount = _countryCount;
+        srandom = _seed == "" ? new SeedRandom() : new SeedRandom(_seed.GetHashCode());
 
         ChooseProvinces();
 
@@ -28,7 +30,7 @@ public class World
         List<Vector2Int>[] origins = new List<Vector2Int>[countryCount];
         for (int countryId = 0; countryId < countryCount; countryId++)
         {
-            Vector2Int origin = new Vector2Int(Random.Range(0, width), Random.Range(0, height));
+            Vector2Int origin = new Vector2Int(srandom.Range(0, width), srandom.Range(0, height));
 
             bool sameOriginExists = true;
             while (sameOriginExists)
@@ -40,7 +42,7 @@ public class World
                 {
                     if (origin == origins[j][0])
                     {
-                        origin = new Vector2Int(Random.Range(0, width), Random.Range(0, height));
+                        origin = new Vector2Int(srandom.Range(0, width), srandom.Range(0, height));
                         sameOriginExists = true;
                         break;
                     }
@@ -97,5 +99,10 @@ public class World
                 unoccupiedProvincesLeft |= origins[countryId].Count != 0;
             }
         }
+    }
+
+    private static void SprinkleNature()
+    {
+
     }
 }
